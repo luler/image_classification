@@ -72,7 +72,7 @@ def uploadImage():
             raise Exception('不支持文件后缀名:' + f.filename)
         filename = path + '/' + str(uuid.uuid1()) + '.' + ext
         f.save(filename)
-        md5 = hashlib.md5(f.read()).hexdigest()
+        md5 = common.md5_file(filename)
         last_filename = path + '/' + md5 + '.' + ext
         shutil.move(filename, last_filename)
         if db.table('image').where('label_id', param['label_id']).where('md5', md5).count() > 0:

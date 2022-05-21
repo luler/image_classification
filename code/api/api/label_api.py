@@ -1,4 +1,5 @@
 import hashlib
+import os.path
 import shutil
 
 from tool import common, validate
@@ -64,6 +65,8 @@ def delLabel():
     db.table('image').where_in('label_id', param['ids']).delete()
     # 删除目录
     for id in param['ids']:
-        shutil.rmtree('deploy/dataset/gallery/' + hashlib.md5(str(id).encode('utf-8')).hexdigest())
+        dir = 'static/gallery/' + hashlib.md5(str(id).encode('utf-8')).hexdigest()
+        if os.path.exists(dir):
+            shutil.rmtree(dir)
 
     return common.json_return('删除成功')

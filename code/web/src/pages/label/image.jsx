@@ -1,8 +1,9 @@
 import React from "react";
-import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm} from "antd";
+import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm, Upload} from "antd";
 import {request_get, request_post} from "@/utils/request_tool";
 import BaseComponent from "@/pages/BaseComponent";
 import {getFullPath} from "@/utils/utils";
+import {getAccessToken} from "@/utils/authority";
 
 export default class label extends BaseComponent {
   state = {
@@ -64,14 +65,23 @@ export default class label extends BaseComponent {
           background: 'white', padding: 20, margin: "20px 0"
         }}
       >
-        <Button
-          type='primary'
-          onClick={() => {
-            this.setStateSimple('visible', true)
+        <Upload
+          name='files'
+          multiple
+          action='/api/auth/uploadImage'
+          headers={{
+            Authorization: getAccessToken()
+          }}
+          data={{
+            label_id: this.state.param.label_id
           }}
         >
-          上传
-        </Button>
+          <Button
+            type='primary'
+          >
+            上传
+          </Button>
+        </Upload>
 
         {/*<Input.Search*/}
         {/*  style={{*/}
@@ -113,36 +123,6 @@ export default class label extends BaseComponent {
         dataSource={this.state.list}
         columns={this.columns}
       />
-      <Modal
-        title='标签'
-        visible={this.state.visible}
-        onCancel={() => {
-          this.setStateSimple('visible', false)
-          this.setStateSimple('temp_data', {})
-        }}
-        onOk={() => {
-          request_post('/api/auth/saveLabel', this.state.temp_data).then(res => {
-            if (res.code === 200) {
-              message.success(res.message)
-              this.setStateSimple('visible', false)
-              this.setStateSimple('temp_data', {})
-              this.fetch()
-            }
-          })
-        }}
-      >
-        <Form
-          labelCol={{span: 4}}
-          wrapperCol={{span: 20}}
-          autoComplete='off'
-        >
-          <Form.Item label='类别名称' required>
-            <Input placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.name', e.target.value)
-            }} value={this.state.temp_data.name || ''}/>
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   }
 

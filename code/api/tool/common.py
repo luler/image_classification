@@ -1,4 +1,5 @@
 # 接口通用返回格式
+import hashlib
 import urllib
 import cv2
 import numpy
@@ -79,3 +80,12 @@ def url_to_image(url):
 # 获取数据库连接
 def get_db():
     return DatabaseManager(setting.DATABASES)
+
+
+# 获取文件md5
+def md5_file(file_path):
+    md5_obj = hashlib.md5()
+    with open(file_path, 'rb') as file_obj:
+        md5_obj.update(file_obj.read())
+    file_md5_id = md5_obj.hexdigest()
+    return file_md5_id
