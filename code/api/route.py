@@ -1,6 +1,6 @@
 from flask import request
 
-from api import common_api, login_api, label_api
+from api import common_api, login_api, label_api, image_api
 from tool import jwt_tool
 
 # 接口路由，全部写在这里
@@ -30,8 +30,10 @@ def add_new_routes(app):
     app.add_url_rule('/api/login', view_func=login_api.login, methods=['POST'])
     # 需要登录的接口
     app.add_url_rule('/api/auth/predict', view_func=common_api.predict, methods=['POST'])
-    app.add_url_rule('/api/auth/uploadImage', view_func=common_api.uploadImage, methods=['POST'])
     app.add_url_rule('/api/auth/getUserInfo', view_func=login_api.getUserInfo, methods=['POST'])
     app.add_url_rule('/api/auth/getLabel', view_func=label_api.getLabel, methods=['POST'])
     app.add_url_rule('/api/auth/saveLabel', view_func=label_api.saveLabel, methods=['POST'])
     app.add_url_rule('/api/auth/delLabel', view_func=label_api.delLabel, methods=['POST'])
+    app.add_url_rule('/api/auth/getImage', view_func=image_api.getImage, methods=['POST'])
+    app.add_url_rule('/api/auth/delImage', view_func=image_api.delImage, methods=['POST'])
+    app.add_url_rule('/api/auth/uploadImage', view_func=image_api.uploadImage, methods=['POST'])

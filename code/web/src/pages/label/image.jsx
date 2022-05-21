@@ -7,8 +7,14 @@ import {getFullPath} from "@/utils/utils";
 export default class label extends BaseComponent {
   state = {
     param: {
+      label_id: this.props.match.params.id,
       page: 1, page_rows: 10,
-    }, list: [], total: 0, visible: false, temp_data: {}, loading: false,
+    },
+    list: [],
+    total: 0,
+    visible: false,
+    temp_data: {},
+    loading: false,
   }
 
   componentDidMount() {
@@ -17,7 +23,7 @@ export default class label extends BaseComponent {
 
   fetch() {
     this.setState({loading: true}, () => {
-      request_post('/api/auth/getLabel', this.state.param).then((res) => {
+      request_post('/api/auth/getImage', this.state.param).then((res) => {
         this.setStateSimple('list', res.info.list)
         this.setStateSimple('total', res.info.total)
         this.setStateSimple('loading', false)
@@ -28,7 +34,7 @@ export default class label extends BaseComponent {
   columns = [{
     title: 'ID', dataIndex: 'id',
   }, {
-    title: '名称', dataIndex: 'name',
+    title: '图片', dataIndex: 'path',
   }, {
     title: '创建时间', dataIndex: 'created_at',
   }, {
@@ -36,28 +42,10 @@ export default class label extends BaseComponent {
   }, {
     title: '操作', render: (record) => {
       return <div>
-        <a
-          onClick={() => {
-            window.location.href = getFullPath('/label/list/' + record.id + '/image')
-          }}
-        >
-          图片管理
-        </a>
-        <Divider type='vertical'/>
-        <a
-          onClick={() => {
-            this.setStateSimple('temp_data', record, () => {
-              this.setStateSimple('visible', true)
-            })
-          }}
-        >
-          编辑
-        </a>
-        <Divider type='vertical'/>
         <Popconfirm
           title='您确定要删除吗？'
           onConfirm={() => {
-            request_post('/api/auth/delLabel', {ids: [record.id]}).then(res => {
+            request_post('/api/auth/delImage', {ids: [record.id]}).then(res => {
               if (res.code === 200) {
                 message.success('删除成功')
                 this.fetch()
@@ -88,24 +76,24 @@ export default class label extends BaseComponent {
             this.setStateSimple('visible', true)
           }}
         >
-          添加
+          上传
         </Button>
 
-        <Input.Search
-          style={{
-            width: 500, float: 'right'
-          }}
-          placeholder='请输入搜索关键字'
-          onSearch={value => {
-            this.setState({
-              param: {
-                ...this.state.param, search: value, page: 1,
-              }
-            }, () => {
-              this.fetch()
-            })
-          }}
-        />
+        {/*<Input.Search*/}
+        {/*  style={{*/}
+        {/*    width: 500, float: 'right'*/}
+        {/*  }}*/}
+        {/*  placeholder='请输入搜索关键字'*/}
+        {/*  onSearch={value => {*/}
+        {/*    this.setState({*/}
+        {/*      param: {*/}
+        {/*        ...this.state.param, search: value, page: 1,*/}
+        {/*      }*/}
+        {/*    }, () => {*/}
+        {/*      this.fetch()*/}
+        {/*    })*/}
+        {/*  }}*/}
+        {/*/>*/}
       </div>
       <Table
         onChange={(pagination) => {

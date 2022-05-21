@@ -33,6 +33,12 @@ export default [
         component: './label/label',
       },
       {
+        name: '图片管理',
+        path: '/label/list/:id/image',
+        component: './label/image',
+        hideInMenu: true,
+      },
+      {
         component: './404',
       },
     ],
