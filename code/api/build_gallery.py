@@ -11,7 +11,8 @@ res = db.table('image as a') \
 
 with open('./static/gallery/label.txt', 'w', encoding='utf-8') as f:
     for path in res:
-        f.write(f"{path} {res[path]}\n")
+        path_temp = path.replace('static/gallery/', '')
+        f.write(f"{path_temp}\t{res[path]}\n")
 
 config = setting.PP_CONFIG
 deploy.python.build_gallery.main(config)
