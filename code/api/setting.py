@@ -12,7 +12,7 @@ DATABASES = orator_database.DATABASES
 
 # jwt配置
 JWT_SECRET = 'fdhrteh%$%$^&$%#￥@##@￥5252'
-JWT_EXPIRE = 7200
+JWT_EXPIRE = 7200000
 
 # 初始化账号密码
 ADMIN_NAME = 'admin'

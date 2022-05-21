@@ -33,3 +33,5 @@ def add_new_routes(app):
     app.add_url_rule('/api/auth/uploadImage', view_func=common_api.uploadImage, methods=['POST'])
     app.add_url_rule('/api/auth/getUserInfo', view_func=login_api.getUserInfo, methods=['POST'])
     app.add_url_rule('/api/auth/getLabel', view_func=label_api.getLabel, methods=['POST'])
+    app.add_url_rule('/api/auth/saveLabel', view_func=label_api.saveLabel, methods=['POST'])
+    app.add_url_rule('/api/auth/delLabel', view_func=label_api.delLabel, methods=['POST'])

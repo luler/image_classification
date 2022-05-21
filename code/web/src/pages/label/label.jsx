@@ -7,14 +7,8 @@ import {getFullPath} from "@/utils/utils";
 export default class label extends BaseComponent {
   state = {
     param: {
-      page: 1,
-      page_rows: 10,
-    },
-    list: [],
-    total: 0,
-    visible: false,
-    temp_data: {},
-    loading: false,
+      page: 1, page_rows: 10,
+    }, list: [], total: 0, visible: false, temp_data: {}, loading: false,
   }
 
   componentDidMount() {
@@ -31,74 +25,61 @@ export default class label extends BaseComponent {
     })
   }
 
-  columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-    },
-    {
-      title: '名称',
-      dataIndex: 'name',
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'created_at',
-    },
-    {
-      title: '更新时间',
-      dataIndex: 'updated_at',
-    },
-    {
-      title: '操作',
-      render: (record) => {
-        return <div>
+  columns = [{
+    title: 'ID', dataIndex: 'id',
+  }, {
+    title: '名称', dataIndex: 'name',
+  }, {
+    title: '创建时间', dataIndex: 'created_at',
+  }, {
+    title: '更新时间', dataIndex: 'updated_at',
+  }, {
+    title: '操作', render: (record) => {
+      return <div>
+        <a
+          onClick={() => {
+            window.location.href = getFullPath('/database/backup/' + record.id)
+          }}
+        >
+          备份配置
+        </a>
+        <Divider type='vertical'/>
+        <a
+          onClick={() => {
+            this.setStateSimple('temp_data', record, () => {
+              this.setStateSimple('visible', true)
+            })
+          }}
+        >
+          编辑
+        </a>
+        <Divider type='vertical'/>
+        <Popconfirm
+          title='您确定要删除吗？'
+          onConfirm={() => {
+            request_post('/api/auth/delLabel', {ids: [record.id]}).then(res => {
+              if (res.code === 200) {
+                message.success('删除成功')
+                this.fetch()
+              }
+            })
+          }}
+        >
           <a
-            onClick={() => {
-              window.location.href = getFullPath('/database/backup/' + record.id)
-            }}
+            style={{color: 'red'}}
           >
-            备份配置
+            删除
           </a>
-          <Divider type='vertical'/>
-          <a
-            onClick={() => {
-              this.setStateSimple('temp_data', record, () => {
-                this.setStateSimple('visible', true)
-              })
-            }}
-          >
-            编辑
-          </a>
-          <Divider type='vertical'/>
-          <Popconfirm
-            title='您确定要删除吗？'
-            onConfirm={() => {
-              request_post('/api/home/delDatabase', {id: record.id}).then(res => {
-                if (res.code === 200) {
-                  message.success('删除成功')
-                  this.fetch()
-                }
-              })
-            }}
-          >
-            <a
-              style={{color: 'red'}}
-            >
-              删除
-            </a>
-          </Popconfirm>
-        </div>
-      }
-    },
-  ]
+        </Popconfirm>
+      </div>
+    }
+  },]
 
   render() {
     return <div>
       <div
         style={{
-          background: 'white',
-          padding: 20,
-          margin: "20px 0"
+          background: 'white', padding: 20, margin: "20px 0"
         }}
       >
         <Button
@@ -107,21 +88,18 @@ export default class label extends BaseComponent {
             this.setStateSimple('visible', true)
           }}
         >
-          添加数据库
+          添加
         </Button>
 
         <Input.Search
           style={{
-            width: 500,
-            float: 'right'
+            width: 500, float: 'right'
           }}
           placeholder='请输入搜索关键字'
           onSearch={value => {
             this.setState({
               param: {
-                ...this.state.param,
-                search: value,
-                page: 1,
+                ...this.state.param, search: value, page: 1,
               }
             }, () => {
               this.fetch()
@@ -133,9 +111,7 @@ export default class label extends BaseComponent {
         onChange={(pagination) => {
           this.setState({
             param: {
-              ...this.state.param,
-              page: pagination.current,
-              page_rows: pagination.pageSize,
+              ...this.state.param, page: pagination.current, page_rows: pagination.pageSize,
             }
           }, () => {
             this.fetch()
@@ -156,14 +132,14 @@ export default class label extends BaseComponent {
         columns={this.columns}
       />
       <Modal
-        title='数据库配置'
+        title='标签'
         visible={this.state.visible}
         onCancel={() => {
           this.setStateSimple('visible', false)
           this.setStateSimple('temp_data', {})
         }}
         onOk={() => {
-          request_post('/api/home/saveDatabase', this.state.temp_data).then(res => {
+          request_post('/api/auth/saveLabel', this.state.temp_data).then(res => {
             if (res.code === 200) {
               message.success(res.message)
               this.setStateSimple('visible', false)
@@ -178,35 +154,10 @@ export default class label extends BaseComponent {
           wrapperCol={{span: 20}}
           autoComplete='off'
         >
-          <Form.Item label='名称' required>
+          <Form.Item label='类别名称' required>
             <Input placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.title', e.target.value)
-            }} value={this.state.temp_data.title || ''}/>
-          </Form.Item>
-          <Form.Item label='主机' required>
-            <Input placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.host', e.target.value)
-            }} value={this.state.temp_data.host || ''}/>
-          </Form.Item>
-          <Form.Item label='端口' required>
-            <Input placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.port', e.target.value)
-            }} value={this.state.temp_data.port || ''}/>
-          </Form.Item>
-          <Form.Item label='账号' required>
-            <Input placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.user', e.target.value)
-            }} value={this.state.temp_data.user || ''}/>
-          </Form.Item>
-          <Form.Item label='密码' required>
-            <Input.Password placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.password', e.target.value)
-            }} value={this.state.temp_data.password || ''}/>
-          </Form.Item>
-          <Form.Item label='数据库' required>
-            <Input placeholder='请输入' onChange={(e) => {
-              this.setStateSimple('temp_data.database', e.target.value)
-            }} value={this.state.temp_data.database || ''}/>
+              this.setStateSimple('temp_data.name', e.target.value)
+            }} value={this.state.temp_data.name || ''}/>
           </Form.Item>
         </Form>
       </Modal>
