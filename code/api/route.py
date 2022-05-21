@@ -30,6 +30,7 @@ def add_new_routes(app):
     app.add_url_rule('/api/login', view_func=login_api.login, methods=['POST'])
     # 需要登录的接口
     app.add_url_rule('/api/auth/predict', view_func=common_api.predict, methods=['POST'])
+    app.add_url_rule('/api/auth/rebuildIndex', view_func=common_api.rebuildIndex, methods=['POST'])
     app.add_url_rule('/api/auth/getUserInfo', view_func=login_api.getUserInfo, methods=['POST'])
     app.add_url_rule('/api/auth/getLabel', view_func=label_api.getLabel, methods=['POST'])
     app.add_url_rule('/api/auth/saveLabel', view_func=label_api.saveLabel, methods=['POST'])

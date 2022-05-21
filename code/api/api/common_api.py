@@ -1,5 +1,4 @@
 import hashlib
-import os.path
 import re
 import shutil
 import uuid
@@ -11,6 +10,7 @@ import tool.common
 import tool.validate
 from flask import current_app, request
 from deploy.python.predict_system import SystemPredictor
+import build_gallery
 
 
 # 初始化预测对象
@@ -41,3 +41,11 @@ def predict():
     output = current_app.system_predictor.predict(img)
     output = tool.common.json_format_numpy(output)
     return tool.common.json_return('访问成功', output)
+
+
+# 重建索引
+def rebuildIndex():
+    build_gallery.building()
+    if hasattr(current_app, 'system_predictor') != False:
+        del current_app.system_predictor
+    return tool.common.json_return('重建完成')
