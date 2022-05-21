@@ -1,3 +1,6 @@
+import hashlib
+import shutil
+
 from tool import common, validate
 
 
@@ -58,5 +61,8 @@ def delLabel():
 
     db = common.get_db()
     db.table('label').where_in('id', param['ids']).delete()
+    # 删除目录
+    for id in param['ids']:
+        shutil.rmtree('deploy/dataset/gallery/' + hashlib.md5(str(id).encode('utf-8')).hexdigest())
 
     return common.json_return('删除成功')
