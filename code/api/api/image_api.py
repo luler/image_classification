@@ -62,7 +62,7 @@ def uploadImage():
     files = request.files.getlist('files')
     if len(files) == 0:
         raise Exception('图片文件不能为空')
-    path = 'deploy/dataset/gallery/' + hashlib.md5(str(label['id']).encode('utf-8')).hexdigest()
+    path = 'static/gallery/' + hashlib.md5(str(label['id']).encode('utf-8')).hexdigest()
     if os.path.exists(path) is False:
         os.mkdir(path)
 

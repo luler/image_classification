@@ -84,9 +84,9 @@ PP_CONFIG = {
     'RecPostProcess': None,
     'IndexProcess': {
         'index_method': 'HNSW32',
-        'image_root': './deploy/dataset/gallery/',
-        'index_dir': './deploy/dataset/index',
-        'data_file': './deploy/dataset/gallery/drink_label.txt',
+        'image_root': './static/gallery/',
+        'index_dir': './deploy/index',
+        'data_file': './static/gallery/label.txt',
         'index_operation': 'new',
         'delimiter': '\t',
         'dist_type': 'IP',

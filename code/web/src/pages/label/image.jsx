@@ -7,14 +7,8 @@ import {getFullPath} from "@/utils/utils";
 export default class label extends BaseComponent {
   state = {
     param: {
-      label_id: this.props.match.params.id,
-      page: 1, page_rows: 10,
-    },
-    list: [],
-    total: 0,
-    visible: false,
-    temp_data: {},
-    loading: false,
+      label_id: this.props.match.params.id, page: 1, page_rows: 10,
+    }, list: [], total: 0, visible: false, temp_data: {}, loading: false,
   }
 
   componentDidMount() {
@@ -34,7 +28,7 @@ export default class label extends BaseComponent {
   columns = [{
     title: 'ID', dataIndex: 'id',
   }, {
-    title: '图片', dataIndex: 'path',
+    title: '图片', render: record => <img height={120} alt='暂无图片' src={'/' + record.path}/>
   }, {
     title: '创建时间', dataIndex: 'created_at',
   }, {
