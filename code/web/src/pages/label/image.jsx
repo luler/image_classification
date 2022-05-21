@@ -9,11 +9,18 @@ export default class label extends BaseComponent {
   state = {
     param: {
       label_id: this.props.match.params.id, page: 1, page_rows: 10,
-    }, list: [], total: 0, visible: false, temp_data: {}, loading: false,
+    }, list: [], total: 0, visible: false, temp_data: {}, loading: false, is_uploading: false,
   }
 
   componentDidMount() {
     this.fetch()
+    let that = this
+    setInterval(function () {
+      if (that.state.is_uploading) {
+        that.setStateSimple('is_uploading', false)
+        that.fetch()
+      }
+    }, 3000)
   }
 
   fetch() {
@@ -71,6 +78,11 @@ export default class label extends BaseComponent {
           action='/api/auth/uploadImage'
           headers={{
             Authorization: getAccessToken()
+          }}
+          onChange={info => {
+            if (info.file.status === 'done') {
+              this.setStateSimple('is_uploading', true)
+            }
           }}
           data={{
             label_id: this.state.param.label_id
