@@ -8,7 +8,7 @@ export default class label extends BaseComponent {
   state = {
     param: {
       page: 1, page_rows: 10,
-    }, list: [], total: 0, visible: false, temp_data: {}, loading: false,
+    }, list: [], total: 0, visible: false, temp_data: {}, loading: false, rebuild_index_loading: false,
   }
 
   componentDidMount() {
@@ -89,6 +89,27 @@ export default class label extends BaseComponent {
           }}
         >
           添加
+        </Button>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <Button
+          type='dashed'
+          loading={this.state.rebuild_index_loading}
+          onClick={() => {
+            Modal.confirm({
+              icon: false, title: '重建索引提示', content: '您是否确定基于当前数据重新创建索引文件？', onOk: () => {
+                this.setStateSimple('rebuild_index_loading', true)
+                request_post('/api/auth/rebuildIndex').then(res => {
+                  if (res.code === 200) {
+                    this.setStateSimple('rebuild_index_loading', false)
+                  }
+                })
+              }
+            })
+          }}
+        >
+          重建索引
         </Button>
 
         <Input.Search
