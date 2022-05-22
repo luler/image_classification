@@ -15,4 +15,4 @@ gast==0.3.3
 faiss-cpu==1.7.1.post2
 
 orator==0.9.9
-PyMySQL
+PyMySQL==1.0.2
