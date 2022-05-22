@@ -17,7 +17,7 @@ export default {
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
     },
-    '/static/': {
+    '/static/gallery/': {
       // 要代理的地址
       // target: 'https://preview.pro.ant.design',
       target: 'http://127.0.0.1:5000',
