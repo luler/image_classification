@@ -1,9 +1,10 @@
 import React from "react";
-import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm, Upload} from "antd";
+import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm, Upload, Breadcrumb} from "antd";
 import {request_get, request_post} from "@/utils/request_tool";
 import BaseComponent from "@/pages/BaseComponent";
-import {getFullPath} from "@/utils/utils";
+import {getFullPath, getPageTitleByPath, getQueryString} from "@/utils/utils";
 import {getAccessToken} from "@/utils/authority";
+import {Link} from "umi";
 
 export default class label extends BaseComponent {
   state = {
@@ -67,6 +68,23 @@ export default class label extends BaseComponent {
 
   render() {
     return <div>
+      <Breadcrumb
+        style={{
+          padding: 20, paddingTop: 0, paddingBottom: 0,
+        }}
+      >
+        <Breadcrumb.Item>
+          <Link to="/">{getPageTitleByPath()}</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to='/label/list'>{getPageTitleByPath('/label/list')}</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <a>{getPageTitleByPath('/label/list/:id/image')}
+            {getQueryString('name') && " [ 类别: " + getQueryString('name') + " ] "}
+          </a>
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <div
         style={{
           background: 'white', padding: 20, margin: "20px 0"

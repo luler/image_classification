@@ -1,8 +1,9 @@
 import React from "react";
-import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm} from "antd";
-import {request_get, request_post} from "@/utils/request_tool";
+import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm, Breadcrumb} from "antd";
+import {request_post} from "@/utils/request_tool";
 import BaseComponent from "@/pages/BaseComponent";
-import {getFullPath} from "@/utils/utils";
+import {history, Link} from 'umi';
+import {getPageTitleByPath} from "@/utils/utils";
 
 export default class label extends BaseComponent {
   state = {
@@ -38,7 +39,8 @@ export default class label extends BaseComponent {
       return <div>
         <a
           onClick={() => {
-            window.location.href = getFullPath('/label/list/' + record.id + '/image')
+            // window.location.href = getFullPath('/label/list/' + record.id + '/image')
+            history.push('/label/list/' + record.id + '/image?name=' + record.name)
           }}
         >
           图片管理
@@ -77,6 +79,20 @@ export default class label extends BaseComponent {
 
   render() {
     return <div>
+      <Breadcrumb
+        style={{
+          padding: 20,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }}
+      >
+        <Breadcrumb.Item>
+          <Link to="/">{getPageTitleByPath()}</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <a>{getPageTitleByPath('/label/list')}</a>
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <div
         style={{
           background: 'white', padding: 20, margin: "20px 0"

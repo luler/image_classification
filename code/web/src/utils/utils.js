@@ -6,6 +6,8 @@
  * @returns {boolean}
  */
 import {extra_config} from "../../config/extra.config";
+import routeConfigData from '../../config/routes';
+import Settings from "../../config/defaultSettings";
 
 export function setStorage(key, value, expires = null) {
   var temp = {
@@ -57,7 +59,7 @@ export function removeStorage(key) {
 export function getQueryString(name) {
   var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
   var r = window.location.search.substr(1).match(reg);
-  if (r != null) return unescape(r[2]);
+  if (r != null) return decodeURI(r[2]);
   return undefined;
 }
 
@@ -69,6 +71,39 @@ export function getQueryString(name) {
 export function getFullPath(path) {
   const prefix = extra_config.routePrefix ? extra_config.routePrefix.replace(/\/$/, '') : ''
   return prefix + path;
+}
+
+/**
+ * 根据页面路径获取当前页面标题
+ * @param path
+ * @returns {string}
+ */
+export function getPageTitleByPath(path) {
+  path = path || '/'
+  const getName = (routeData, path) => {
+    // console.log(path, routeData)
+    let res = ''
+    for (const i in routeData) {
+      if ((routeData[i].path + '').toLowerCase() === (path + '').toLowerCase()) {
+        res = routeData[i].name || res
+        break
+      } else {
+        const routes = routeData[i].routes || [];
+        res = getName(routes, path)
+        if (res !== '未设置') {
+          break
+        }
+      }
+    }
+    return res || '未设置'
+  }
+  let res
+  if (path === '/') {
+    res = Settings.title
+  } else { // 去路由中找
+    res = getName(routeConfigData, path)
+  }
+  return res
 }
 
 
