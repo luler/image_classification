@@ -1,3 +1,4 @@
+import datetime
 import hashlib
 
 from flask import request
@@ -50,3 +51,18 @@ def getUserInfo():
         .select('id', 'name') \
         .first()
     return common.json_return('访问成功', user)
+
+
+# 编辑密码
+def editPassword():
+    field = ['password', 'confirm_password']
+    param = common.get_request_param(field)
+    validate.validate.checkData(param, {
+        'password|密码': 'required|string|min:8',
+        'confirm_password|确认密码': 'required|same:password',
+    })
+    common.get_db().table('user') \
+        .where('id', request.user_id) \
+        .update(
+        {'password': hashlib.md5(param['password'].encode('utf-8')).hexdigest(), 'updated_at': datetime.datetime.now()})
+    return common.json_return('修改成功')

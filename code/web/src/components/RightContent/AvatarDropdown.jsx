@@ -47,7 +47,7 @@ const AvatarDropdown = ({menu}) => {
               </Form>
             </div>,
             onOk: (e) => {
-              request_post('/api/changPassword', password_info).then(res => {
+              request_post('/api/auth/editPassword', password_info).then(res => {
                 if (res.code === 200) {
                   e()
                   message.success(res.message)
