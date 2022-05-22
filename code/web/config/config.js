@@ -50,7 +50,7 @@ export default defineConfig({
   manifest: {
     basePath: extra_config.routePrefix,
   },
-  outputPath: '../api' + extra_config.routePrefix,
+  outputPath: 'dist' + extra_config.routePrefix,
   // Fast Refresh 热更新
   fastRefresh: {},
   openAPI: [
