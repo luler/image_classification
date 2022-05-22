@@ -92,7 +92,6 @@ export default class label extends BaseComponent {
         </Button>
         &nbsp;
         &nbsp;
-        &nbsp;
         <Button
           type='dashed'
           loading={this.state.rebuild_index_loading}

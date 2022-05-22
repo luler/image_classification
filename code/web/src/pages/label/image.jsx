@@ -20,7 +20,7 @@ export default class label extends BaseComponent {
         that.setStateSimple('is_uploading', false)
         that.fetch()
       }
-    }, 3000)
+    }, 1000)
   }
 
   fetch() {
@@ -93,6 +93,32 @@ export default class label extends BaseComponent {
           >
             上传
           </Button>
+          &nbsp;
+          &nbsp;
+          <Button
+            onClick={(event) => {
+              event.stopPropagation()
+              if (!this.state.selectedRowKeys || this.state.selectedRowKeys.length === 0) {
+                message.warning('删除选项不能为空')
+                return false
+              }
+              Modal.confirm({
+                title: '删除提示', content: '您确定要删除选中项目吗？', onOk: () => {
+                  request_post('/api/auth/delImage', {ids: this.state.selectedRowKeys}).then(res => {
+                    if (res.code === 200) {
+                      message.success('删除成功')
+                      this.fetch()
+                    }
+                  })
+                }
+              })
+            }}
+
+            // style={{float: "left"}}
+            type='danger'
+          >
+            删除选中
+          </Button>
         </Upload>
 
         {/*<Input.Search*/}
@@ -112,6 +138,11 @@ export default class label extends BaseComponent {
         {/*/>*/}
       </div>
       <Table
+        rowSelection={{
+          onChange: (selectedRowKeys, selectedRows) => {
+            this.setStateSimple('selectedRowKeys', selectedRowKeys)
+          }
+        }}
         onChange={(pagination) => {
           this.setState({
             param: {
