@@ -1,5 +1,5 @@
 import React from "react";
-import {Breadcrumb, Col, Image, Input, Row, Upload} from "antd";
+import {Breadcrumb, Col, Image, Input, Row, Spin, Upload} from "antd";
 import BaseComponent from "@/pages/BaseComponent";
 import {Link} from 'umi';
 import {getPageTitleByPath} from "@/utils/utils";
@@ -35,30 +35,34 @@ export default class index extends BaseComponent {
           background: 'white', padding: 20, margin: "20px 0"
         }}
       >
-        <Upload.Dragger
-          name='file'
-          action='/api/auth/predict'
-          headers={{
-            Authorization: getAccessToken(),
-          }}
-          data={{
-            result_image: 1
-          }}
-          onChange={info => {
-            if (info.file.status === 'done') {
-              this.setStateSimple('response', info.file.response)
-            }
-          }}
-          showUploadList={false}
-        >
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined/>
-          </p>
-          <p className="ant-upload-text">支持点击选择文件，或拖动文件到当前区域内</p>
-          <p className="ant-upload-hint">
-            支持识别jpg,png,jpeg格式的文件，识别结果将出现在下面的方框中
-          </p>
-        </Upload.Dragger>
+        <Spin spinning={this.state.loading || false}>
+          <Upload.Dragger
+            name='file'
+            action='/api/auth/predict'
+            headers={{
+              Authorization: getAccessToken(),
+            }}
+            data={{
+              result_image: 1
+            }}
+            onChange={info => {
+              this.setStateSimple('loading', true)
+              if (info.file.status === 'done') {
+                this.setStateSimple('loading', false)
+                this.setStateSimple('response', info.file.response)
+              }
+            }}
+            showUploadList={false}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined/>
+            </p>
+            <p className="ant-upload-text">支持点击选择文件，或拖动文件到当前区域内</p>
+            <p className="ant-upload-hint">
+              支持识别jpg,png,jpeg格式的文件，识别结果将出现在下面的方框中
+            </p>
+          </Upload.Dragger>
+        </Spin>
         <Row style={{marginTop: 20}}>
           <Col lg={12}>
             <div style={{padding: 30}}>
