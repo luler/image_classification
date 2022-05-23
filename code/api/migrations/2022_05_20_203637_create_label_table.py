@@ -1,4 +1,4 @@
-from orator_database.migrations import Migration
+from orator.migrations import Migration
 
 
 class CreateLabelTable(Migration):
