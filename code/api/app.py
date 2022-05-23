@@ -36,5 +36,6 @@ if (__name__ == '__main__'):
         host=app.config.get('HOST'),
         port=app.config.get('PORT'),
         debug=DEBUG,
-        threaded=app.config.get('THREADED')
+        threaded=app.config.get('THREADED'),
+        processes=app.config.get('PROCESSES')
     )
