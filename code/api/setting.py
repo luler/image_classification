@@ -7,7 +7,7 @@ ENV = 'development'
 HOST = '0.0.0.0'
 PORT = 5000
 THREADED = False
-PROCESSES = 5
+PROCESSES = 1
 
 # 数据库配置
 DATABASES = orator_database.DATABASES
