@@ -37,7 +37,7 @@ def predict():
     file.save(filename)
 
     # 很坑，f.read在f.save前，保存的文件会是空的
-    last_file = prefix + hashlib.md5(file.read()).hexdigest() + '.' + ext
+    last_file = prefix + tool.common.md5_file(filename) + '.' + ext
     shutil.move(filename, last_file)
 
     img = cv2.imread(last_file)[:, :, ::-1]

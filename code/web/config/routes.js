@@ -44,6 +44,12 @@ export default [
     ],
   },
   {
+    path: '/predict',
+    name: '识别体验',
+    icon: 'DatabaseOutlined',
+    component: './label/predict',
+  },
+  {
     component: './404',
   },
 ];
