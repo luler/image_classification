@@ -1,6 +1,3 @@
-from tool import common
+from tool import cas_tool
 
-db = common.get_db()
-res = db.table('label').paginate(10, 1)
-
-print(res.total,res.to_json())
+print(cas_tool.get_user_info('40890942kk30e4apf1r1l4iql9'))

@@ -1,7 +1,7 @@
 import datetime
 import hashlib
 
-from flask import request
+from flask import request, redirect
 from orator import DatabaseManager
 
 import setting
@@ -42,6 +42,31 @@ def login():
     }
 
     return common.json_return('访问成功', res)
+
+
+# CAS登录
+def casLogin():
+    field = ['code', 'open_id']
+    param = common.get_request_param(field)
+    validate.validate.checkData(param, {
+        'code|授权码': 'required',
+    })
+
+    db = common.get_db()
+    # 默认登录admin
+    user = db.table('user').where('name', 'admin').first()
+    if user == None:
+        db.table('user').insert({
+            'name': setting.ADMIN_NAME,
+            'password': hashlib.md5(setting.ADMIN_PASSWORD.encode('utf-8')).hexdigest(),
+        })
+        user = db.table('user').where('name', param['name']).first()
+
+    token = jwt_tool.jwt_encode({
+        'user_id': user['id']
+    })
+
+    return redirect('/?authorization=' + token)
 
 
 # 获取用户信息

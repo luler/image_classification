@@ -34,6 +34,7 @@ def add_new_routes(app):
 
     # 自定义路由
     app.add_url_rule('/api/login', view_func=login_api.login, methods=['POST'])
+    app.add_url_rule('/api/casLogin', view_func=login_api.casLogin, methods=['GET'])
     # 需要登录的接口
     app.add_url_rule('/api/auth/predict', view_func=common_api.predict, methods=['POST'])
     app.add_url_rule('/api/auth/rebuildIndex', view_func=common_api.rebuildIndex, methods=['POST'])
