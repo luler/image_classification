@@ -1,3 +1,5 @@
+import os
+
 from flask import request
 
 from api import common_api, login_api, label_api, image_api
@@ -16,6 +18,10 @@ def add_new_routes(app):
         if error == '授权凭证无效':
             code = 401
         return tool.common.json_return(error, [], code)
+
+    @app.before_first_request
+    def before_first_request_instance():
+        os.system('orator migrate -c orator_database.py -f')
 
     @app.before_request
     def before_request_instance():
