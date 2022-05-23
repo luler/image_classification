@@ -16,3 +16,4 @@ faiss-cpu==1.7.1.post2
 
 orator==0.9.9
 PyMySQL==1.0.2
+pyjwt==2.4.0
