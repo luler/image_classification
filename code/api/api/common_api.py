@@ -44,7 +44,8 @@ def predict():
     result = {}
     output = current_app.system_predictor.predict(img)
     if result_image == '1':
-        draw_bbox_results(img, output, last_file, save_dir='static/predict_images')
+        draw_bbox_results(img, output, last_file, save_dir='static/predict_images',
+                          font_path="./deploy/utils/simfang.ttf")
         result['result_image'] = '/' + last_file
     output = tool.common.json_format_numpy(output)
     result['result'] = output
