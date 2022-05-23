@@ -23,8 +23,8 @@ ADMIN_PASSWORD = 'linzhou'
 PP_CONFIG = {
     'Global': {
         'infer_imgs': './deploy/dataset/test_images/test.jpg',
-        'det_inference_model_dir': './deploy/models/picodet_PPLCNet_x2_5_mainbody_lite_v1.0_infer',
-        'rec_inference_model_dir': './deploy/models/general_PPLCNet_x2_5_lite_v1.0_infer',
+        'det_inference_model_dir': './deploy/models/picodet_PPLCNet_x2_5_mainbody_lite_v1.0_infer/',
+        'rec_inference_model_dir': './deploy/models/general_PPLCNet_x2_5_lite_v1.0_infer/',
         'rec_nms_thresold': 0.05,
         'batch_size': 1,
         'image_shape': [3, 640, 640],
@@ -86,7 +86,7 @@ PP_CONFIG = {
     'IndexProcess': {
         'index_method': 'HNSW32',
         'image_root': './static/gallery/',
-        'index_dir': './deploy/index',
+        'index_dir': './deploy/index/',
         'data_file': './static/gallery/label.txt',
         'index_operation': 'new',
         'delimiter': '\t',
