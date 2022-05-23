@@ -1,10 +1,11 @@
 version: "2"
 services:
   paddle:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: paddle
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile
+    #    image: paddle
+    image: registry.cn-shenzhen.aliyuncs.com/luler/image_classification
     ports:
       - 5000:5000
     volumes:
