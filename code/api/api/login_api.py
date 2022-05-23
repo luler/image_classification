@@ -6,7 +6,7 @@ from orator import DatabaseManager
 
 import setting
 
-from tool import common, validate, jwt_tool
+from tool import common, validate, jwt_tool, cas_tool
 
 
 # 登录
@@ -51,6 +51,8 @@ def casLogin():
     validate.validate.checkData(param, {
         'code|授权码': 'required',
     })
+
+    user_info = cas_tool.get_user_info(param['code'])
 
     db = common.get_db()
     # 默认登录admin
