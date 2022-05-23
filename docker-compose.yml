@@ -13,7 +13,7 @@ services:
   nginx:
     image: nginx:1.21.6
     ports:
-      - 8000:80
+      - 5566:80
     volumes:
       - ./runtime/nginx_logs:/var/log/nginx
       - ./code:/home/wwwroot
