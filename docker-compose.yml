@@ -1,5 +1,14 @@
 version: "2"
 services:
+  paddle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: paddle
+    ports:
+      - 5000:5000
+    volumes:
+      - ./code/api:/root/work
   nginx:
     image: nginx:1.21.6
     ports:
