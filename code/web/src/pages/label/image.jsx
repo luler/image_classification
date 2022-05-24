@@ -1,8 +1,8 @@
 import React from "react";
-import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm, Upload, Breadcrumb} from "antd";
+import {Button, Form, Input, Modal, Table, message, Divider, Popconfirm, Upload, Breadcrumb, Image} from "antd";
 import {request_get, request_post} from "@/utils/request_tool";
 import BaseComponent from "@/pages/BaseComponent";
-import {getFullPath, getPageTitleByPath, getQueryString} from "@/utils/utils";
+import {bytesToSize, getPageTitleByPath, getQueryString} from "@/utils/utils";
 import {getAccessToken} from "@/utils/authority";
 import {Link} from "umi";
 
@@ -37,7 +37,9 @@ export default class label extends BaseComponent {
   columns = [{
     title: 'ID', dataIndex: 'id',
   }, {
-    title: '图片', render: record => <img height={120} alt='暂无图片' src={'/' + record.path}/>
+    title: '图片', render: record => <Image width={120} alt='暂无图片' src={'/' + record.path}/>
+  }, {
+    title: '大小', render: record => bytesToSize(record.size)
   }, {
     title: '创建时间', dataIndex: 'created_at',
   }, {

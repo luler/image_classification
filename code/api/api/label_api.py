@@ -18,10 +18,13 @@ def getLabel():
     if search != '':
         query.where('name', 'like', f"%{param['search']}%")
 
-    data = db.table('label').where(query).paginate(page_rows, page)
+    data = db.table('label').where(query).order_by('id', 'desc').paginate(page_rows, page)
+    list = data.to_dict()
+    for v in list:
+        v['image_count'] = db.table('image').where('label_id', v['id']).count()
 
     res = {
-        'list': data.to_dict(),
+        'list': list,
         'total': data.total,
     }
 
