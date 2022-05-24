@@ -2,10 +2,9 @@
 
 ### 特性
 
-- 后端：EsaySwoole框架 前端：ant design pro V4
-- 备份工具：mydumper（多线程备份，速度极快）
-- crontab定时备份策略
-- 主要功能模块：数据库配置管理、备份配置管理、备份文件管理
+- 后端：flask框架 前端：ant design pro v5
+- 图片识别分类技术：百度飞浆的pp-shitu
+- 主要功能模块：类别管理、类别图片管理、识别体验
 
 ### 安装
 
@@ -16,6 +15,15 @@ docker-compose up -d
 
 ### 访问
 
-容器运行成功后，访问：http://ip:6033/
+容器运行成功后，访问：http://ip:5566/
 初始账号: admin 密码: linzhou
+
+# 使用截图
+
+- 类别创建
+  ![识别体验](example1.jpg "使用截图")
+- 类别图片管理
+  ![识别体验](example2.jpg "使用截图")
+- 识别体验
+  ![识别体验](example3.jpg "使用截图")
 
