@@ -20,7 +20,7 @@ def getImage():
 
     db = common.get_db()
 
-    data = db.table('image').where('label_id', param['label_id']).paginate(page_rows, page)
+    data = db.table('image').where('label_id', param['label_id']).order_by('id', 'desc').paginate(page_rows, page)
 
     res = {
         'list': data.to_dict(),

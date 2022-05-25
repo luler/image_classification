@@ -26,56 +26,64 @@ export default class label extends BaseComponent {
     })
   }
 
-  columns = [{
-    title: 'ID', dataIndex: 'id',
-  }, {
-    title: '名称', dataIndex: 'name',
-  }, {
-    title: '创建时间', dataIndex: 'created_at',
-  }, {
-    title: '更新时间', dataIndex: 'updated_at',
-  }, {
-    title: '操作', render: (record) => {
-      return <div>
-        <a
-          onClick={() => {
-            // window.location.href = getFullPath('/label/list/' + record.id + '/image')
-            history.push('/label/list/' + record.id + '/image?name=' + record.name)
-          }}
-        >
-          图片管理
-        </a>
-        <Divider type='vertical'/>
-        <a
-          onClick={() => {
-            this.setStateSimple('temp_data', record, () => {
-              this.setStateSimple('visible', true)
-            })
-          }}
-        >
-          编辑
-        </a>
-        <Divider type='vertical'/>
-        <Popconfirm
-          title='您确定要删除吗？'
-          onConfirm={() => {
-            request_post('/api/auth/delLabel', {ids: [record.id]}).then(res => {
-              if (res.code === 200) {
-                message.success('删除成功')
-                this.fetch()
-              }
-            })
-          }}
-        >
+  columns = [
+    {
+      title: 'ID', dataIndex: 'id',
+    },
+    {
+      title: '名称', dataIndex: 'name',
+    },
+    {
+      title: '图片数量', dataIndex: 'image_count',
+    },
+    {
+      title: '创建时间', dataIndex: 'created_at',
+    },
+    {
+      title: '更新时间', dataIndex: 'updated_at',
+    },
+    {
+      title: '操作', render: (record) => {
+        return <div>
           <a
-            style={{color: 'red'}}
+            onClick={() => {
+              // window.location.href = getFullPath('/label/list/' + record.id + '/image')
+              history.push('/label/list/' + record.id + '/image?name=' + record.name)
+            }}
           >
-            删除
+            图片管理
           </a>
-        </Popconfirm>
-      </div>
-    }
-  },]
+          <Divider type='vertical'/>
+          <a
+            onClick={() => {
+              this.setStateSimple('temp_data', record, () => {
+                this.setStateSimple('visible', true)
+              })
+            }}
+          >
+            编辑
+          </a>
+          <Divider type='vertical'/>
+          <Popconfirm
+            title='您确定要删除吗？'
+            onConfirm={() => {
+              request_post('/api/auth/delLabel', {ids: [record.id]}).then(res => {
+                if (res.code === 200) {
+                  message.success('删除成功')
+                  this.fetch()
+                }
+              })
+            }}
+          >
+            <a
+              style={{color: 'red'}}
+            >
+              删除
+            </a>
+          </Popconfirm>
+        </div>
+      }
+    },]
 
   render() {
     return <div>
