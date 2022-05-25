@@ -1,4 +1,4 @@
-FROM registry.baidubce.com/paddlepaddle/paddle:2.3.0
+FROM python:3.7
 
 MAINTAINER 1207032539@qq.com
 
