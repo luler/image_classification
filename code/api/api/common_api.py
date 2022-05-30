@@ -24,6 +24,16 @@ def predict():
     if hasattr(current_app, 'system_predictor') == False:
         __init_predictor()
     ############################
+    field = ['score_thres', 'return_k']
+    param = tool.common.get_request_param(field)
+    score_thres = param.get('score_thres', setting.PP_CONFIG['IndexProcess']['score_thres'])
+    return_k = param.get('return_k', setting.PP_CONFIG['IndexProcess']['return_k'])
+    score_thres = float(score_thres)
+    return_k = int(return_k)
+    if score_thres <= 0 or score_thres > 1:
+        raise Exception('图片相似度取值范围0-1')
+    if return_k <= 0:
+        raise Exception('返回结果数量为大于0的整数')
     file = request.files.get('file')
     param = tool.common.get_request_param(['result_image'])
     result_image = str(param.get('result_image', 0))
@@ -42,7 +52,7 @@ def predict():
 
     img = cv2.imread(last_file)[:, :, ::-1]
     result = {}
-    output = current_app.system_predictor.predict(img)
+    output = current_app.system_predictor.predict(img, score_thres=score_thres, return_k=return_k)
     if result_image == '1':
         draw_bbox_results(img, output, last_file, save_dir='static/predict_images',
                           font_path="./deploy/utils/simfang.ttf")

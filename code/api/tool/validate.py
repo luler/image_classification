@@ -14,6 +14,9 @@ class validate():
             if len(rule_field) > 1:
                 rule_field_title = rule_field[1]
             rule_field = rule_field[0]
+            if params.get(rule_field, None) == None \
+                    and re.search("^required", rules[temp_rule_field], re.IGNORECASE) == None:
+                continue
             # 一个个验证，不通过就报错
             one_rule = {rule_field: rules[temp_rule_field]}
             results = validator.validate(params, one_rule, return_info=True)

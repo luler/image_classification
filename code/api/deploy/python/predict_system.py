@@ -101,7 +101,7 @@ class SystemPredictor(object):
 
         return filtered_results
 
-    def predict(self, img):
+    def predict(self, img, return_k=None, score_thres=None):
         output = []
         # st1: get all detection results
         results = self.det_predictor.predict(img)
@@ -110,13 +110,15 @@ class SystemPredictor(object):
         results = self.append_self(results, img.shape)
 
         # st3: recognition process, use score_thres to ensure accuracy
+        return_k = self.return_k if return_k == None else return_k
+        score_thres = self.config["IndexProcess"]["score_thres"] if score_thres == None else score_thres
         for result in results:
             preds = {}
             xmin, ymin, xmax, ymax = result["bbox"].astype("int")
             crop_img = img[ymin:ymax, xmin:xmax, :].copy()
             rec_results = self.rec_predictor.predict(crop_img)
             preds["bbox"] = [xmin, ymin, xmax, ymax]
-            scores, docs = self.Searcher.search(rec_results, self.return_k)
+            scores, docs = self.Searcher.search(rec_results, return_k)
 
             # just top-1 result will be returned for the final
             if self.config["IndexProcess"]["dist_type"] == "hamming":
@@ -125,7 +127,7 @@ class SystemPredictor(object):
                     preds["rec_scores"] = scores[0][0]
                     output.append(preds)
             else:
-                if scores[0][0] >= self.config["IndexProcess"]["score_thres"]:
+                if scores[0][0] >= score_thres:
                     preds["rec_docs"] = self.id_map[docs[0][0]].split()[1]
                     preds["rec_scores"] = scores[0][0]
                     output.append(preds)
