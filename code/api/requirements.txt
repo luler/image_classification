@@ -1,6 +1,7 @@
 Flask==2.1.2
 validator==0.7.1
 numpy==1.21.6
+protobuf==3.19.4
 paddlepaddle==2.3.0
 prettytable
 ujson
