@@ -16,5 +16,6 @@ services:
       - 5566:80
     volumes:
       - ./runtime/nginx_logs:/var/log/nginx
-      - ./code:/home/wwwroot
+      - ./code/web/dist:/home/wwwroot/web/dist
+      - ./code/api/static:/home/wwwroot/resource/static
       - ./config/nginx/conf.d:/etc/nginx/conf.d
