@@ -9,13 +9,13 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./code/api:/root/work
+      - .:/root/work
   nginx:
     image: nginx:1.21.6
     ports:
       - 5566:80
     volumes:
-      - ./runtime/nginx_logs:/var/log/nginx
-      - ./code/web/dist:/home/wwwroot/web/dist
-      - ./code/api/static:/home/wwwroot/resource/static
+      - ./log/nginx_logs:/var/log/nginx
+      - ./web/dist:/home/wwwroot/web/dist
+      - ./static:/home/wwwroot/resource/static
       - ./config/nginx/conf.d:/etc/nginx/conf.d

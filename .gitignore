@@ -1,3 +1,6 @@
-.idea
-!.gitignore
+/.idea
+/.vscode
+*.log
+.DS_Store
 **/__pycache__
+image_classification.db
