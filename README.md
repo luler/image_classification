@@ -16,7 +16,7 @@ docker-compose up -d
 ### 访问
 
 容器运行成功后，访问：http://ip:5566/
-初始账号: admin 密码: linzhou
+初始账号: admin 密码: admin
 
 # 使用截图
 

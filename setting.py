@@ -18,7 +18,7 @@ JWT_EXPIRE = 7200000
 
 # 初始化账号密码
 ADMIN_NAME = 'admin'
-ADMIN_PASSWORD = 'linzhou'
+ADMIN_PASSWORD = 'admin'
 
 # pp-shitu预测配置参数
 PP_CONFIG = {
