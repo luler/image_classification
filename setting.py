@@ -101,7 +101,7 @@ PP_CONFIG = {
 
 # CAS配置
 CAS_CONFIG = {
-    'host': 'https://cas.luler.top',
-    'appid': '628b40b2bfb3c',
-    'appsecret': 'phd9jpjporm6mods73edo5vffj',
+    'host': '',
+    'appid': '',
+    'appsecret': '',
 }
